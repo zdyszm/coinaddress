@@ -26,6 +26,7 @@
 
 #include <stdint.h>
 #include "sha2.h"
+#include "sha3.h"
 
 typedef struct _HMAC_SHA256_CTX {
 	uint8_t o_key_pad[SHA256_BLOCK_LENGTH];
@@ -36,6 +37,7 @@ typedef struct _HMAC_SHA512_CTX {
 	uint8_t o_key_pad[SHA512_BLOCK_LENGTH];
 	SHA512_CTX ctx;
 } HMAC_SHA512_CTX;
+
 
 void hmac_sha256_Init(HMAC_SHA256_CTX *hctx, const uint8_t *key, const uint32_t keylen);
 void hmac_sha256_Update(HMAC_SHA256_CTX *hctx, const uint8_t *msg, const uint32_t msglen);
@@ -48,5 +50,37 @@ void hmac_sha512_Update(HMAC_SHA512_CTX *hctx, const uint8_t *msg, const uint32_
 void hmac_sha512_Final(HMAC_SHA512_CTX *hctx, uint8_t *hmac);
 void hmac_sha512(const uint8_t *key, const uint32_t keylen, const uint8_t *msg, const uint32_t msglen, uint8_t *hmac);
 void hmac_sha512_prepare(const uint8_t *key, const uint32_t keylen, uint64_t *opad_digest, uint64_t *ipad_digest);
+
+/**
+* \brief Generate SHA3-256 based HMAC
+*
+* This function generates an HMAC verification hash, based on SHA3-256
+*
+* \param msg Pointer to the message to be signed
+* \param msg_len size of the message string
+* \param hmac_key Pointer to the key to be used for generating the hmac
+* \param hmac_key_len Size of the hmac key
+* \param hmac Pointer to the hmac buffer, where the final hmac will be stored
+*
+* \return FKO_SUCCESS if successful, returns an error code otherwise.
+*/
+int
+hmac_sha3_256(const char *msg, const unsigned int msg_len,
+	const char *hmac_key, const int hmac_key_len, unsigned char *hmac);
+/**
+* \brief Generate SHA3-512 based HMAC
+*
+* This function generates an HMAC verification hash, based on SHA3-512
+*
+* \param msg Pointer to the message to be signed
+* \param msg_len size of the message string
+* \param hmac_key Pointer to the key to be used for generating the hmac
+* \param hmac_key_len Size of the hmac key
+* \param hmac Pointer to the hmac buffer, where the final hmac will be stored
+*
+* \return FKO_SUCCESS if successful, returns an error code otherwise.
+*/
+int hmac_sha3_512(const char *msg, const unsigned int msg_len,
+	 const char *hmac_key, const int hmac_key_len, unsigned char *hmac);
 
 #endif
