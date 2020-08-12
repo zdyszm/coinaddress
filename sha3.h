@@ -44,6 +44,9 @@ extern "C" {
 #define SHA3_384_DIGEST_LENGTH  sha3_384_hash_size
 #define SHA3_512_DIGEST_LENGTH  sha3_512_hash_size
 
+
+#define MAX_DIGEST_BLOCK_LEN    SHA3_256_BLOCK_LENGTH
+
 /**
  * SHA3 Algorithm context.
  */
